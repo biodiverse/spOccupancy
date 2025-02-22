@@ -1,3 +1,7 @@
+# spOccupancy 0.8.1
+
++ Fixed a bug in `stMsPGOcc()` and `svcTMsPGOcc()` that prevented the models from running when there was only 1 within-season replicate. Thanks to Kevin Lafferty for bringing this to my attention. 
+
 # spOccupancy 0.8.0
 
 + For queries on anything related to `spOccupancy` (and `spAbundance`), please use the new [spOccupancy/spAbundance mailing list](https://groups.google.com/g/spocc-spabund-users). 

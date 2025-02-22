@@ -348,7 +348,7 @@ svcTMsPGOcc <- function(occ.formula, det.formula, data, inits, priors,
   n.years <- rep(NA, J)
   # NOTE: assuming the same primary replicate history for each species. 
   for (j in 1:J) {
-    n.years[j] <- sum(apply(y.big[1, j, , ], 1, function(a) sum(!is.na(a))) != 0)
+    n.years[j] <- sum(apply(y.big[1, j, , , drop = FALSE], 3, function(a) sum(!is.na(a))) != 0)
   }
   # Number of latent factors
   q <- n.factors
