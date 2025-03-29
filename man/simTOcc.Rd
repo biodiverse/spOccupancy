@@ -18,9 +18,9 @@ simTOcc(J.x, J.y, n.time, n.rep, n.rep.max, beta, alpha, sp.only = 0, trend = TR
 
 \item{J.y}{a single numeric value indicating the number of sites to simulate detection-nondetection data along the vertical axis. Total number of sites with simulated data is \eqn{J.x \times J.y}{J.x x J.y}. }
 
-\item{n.time}{a single numeric value indicating the number of primary time periods (denoted T) over which sampling occurs.} 
+\item{n.time}{a vector with length equal to the total number of sites (\eqn{J.x \times J.y}{J.x x J.y}) with each value indicating the number of primary time periods (denoted T) over which sampling occurs for that individual site.} 
 
-\item{n.rep}{a numeric matrix indicating the number of replicates at each site during each primary time period. The matrix must have \eqn{J = J.x \times J.y}{J = J.x x J.y} rows and T columns, where T is the number of primary time periods (e.g., years or seasons) over which sampling occurs.} 
+\item{n.rep}{a numeric matrix indicating the number of replicates at each site during each primary time period. The matrix must have \eqn{J = J.x \times J.y}{J = J.x x J.y} rows and T columns, where T is maximum the number of primary time periods (e.g., years or seasons) over which sampling occurs.} 
 
 \item{n.rep.max}{a single numeric value indicating the maximum number of replicate surveys. This is an optional argument, with its default value set to \code{max(n.rep)}. This can be used to generate data sets with different types of missingness (e.g., simulate data across 20 days (replicate surveys) but sites are only sampled a maximum of ten times each).}
 
