@@ -1343,7 +1343,7 @@ spIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
           re.level.names.fit <- re.level.names
         }
 	# Site indices for fitted data
-	sites.fit <- sapply(sites, function(a) a[a %in% curr.set.fit])
+	sites.fit <- lapply(sites, function(a) a[a %in% curr.set.fit])
 	vals <- sort(unique(unlist(sites.fit)))
 	for (q in 1:n.data) {
           # This is needed to ensure that you don't pull the data from data source k.fold.data at sites where there 
@@ -1404,7 +1404,7 @@ spIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
 	z.long.indx.fit <- z.long.indx.fit - 1
 
 	# Site indices for hold out data
-	sites.0 <- sapply(sites, function(a) a[a %in% curr.set.pred])
+	sites.0 <- lapply(sites, function(a) a[a %in% curr.set.pred])
 	vals <- sort(unique(unlist(sites.0)))
 	for (q in 1:n.data) {
           # Only get missing sites at the single hold out data set if that's the type you are using.
@@ -2013,7 +2013,7 @@ spIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
           re.level.names.fit <- re.level.names
         }
 	# Site indices for fitted data
-	sites.fit <- sapply(sites, function(a) a[a %in% curr.set.fit])
+	sites.fit <- lapply(sites, function(a) a[a %in% curr.set.fit])
 	vals <- sort(unique(unlist(sites.fit)))
 	for (q in 1:n.data) {
           # This is needed to ensure that you don't pull the data from data source k.fold.data at sites where there 
@@ -2074,7 +2074,7 @@ spIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
 	z.long.indx.fit <- z.long.indx.fit - 1
 
 	# Site indices for hold out data
-	sites.0 <- sapply(sites, function(a) a[a %in% curr.set.pred])
+	sites.0 <- lapply(sites, function(a) a[a %in% curr.set.pred])
 	vals <- sort(unique(unlist(sites.0)))
 	for (q in 1:n.data) {
           # Only get missing sites at the single hold out data set if that's the type you are using.

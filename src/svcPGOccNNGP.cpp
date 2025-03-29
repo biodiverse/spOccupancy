@@ -683,59 +683,44 @@ extern "C" {
         /********************************************************************
          *Update w (spatial random effects)
          *******************************************************************/
-	// Update B and F for all svcs
-        // for (ll = 0; ll < pTilde; ll++) {
-        //   updateBFSVC(&B[ll * nIndx], &F[ll*J], &c[ll * m*nThreads], 
-	//       	&C[ll * mm * nThreads], coords, nnIndx, nnIndxLU, 
-	//       	J, m, theta[sigmaSqIndx * pTilde + ll], 
-	//       	theta[phiIndx * pTilde + ll], nu[ll], covModel, 
-	//       	&bk[ll * sizeBK], nuB[ll]);
-        // }
-
-	for (ii = 0; ii < Jw; ii++) {
-
+        for (ii = 0; ii < Jw; ii++) {
           for (ll = 0; ll < pTilde; ll++) { // row
-
             a[ll] = 0; 
-	    v[ll] = 0; 
-
-	    if (uIndxLU[Jw + ii] > 0){ // is ii a neighbor for anybody
-	      for (j = 0; j < uIndxLU[Jw+ii]; j++){ // how many locations have ii as a neighbor
-	        b = 0;
-	        // now the neighbors for the jth location who has ii as a neighbor
-	        jj = uIndx[uIndxLU[ii]+j]; // jj is the index of the jth location who has ii as a neighbor
-	        for(k = 0; k < nnIndxLU[Jw+jj]; k++){ // these are the neighbors of the jjth location
-	          kk = nnIndx[nnIndxLU[jj]+k]; // kk is the index for the jth locations neighbors
-	          if(kk != ii){ //if the neighbor of jj is not ii
-	    	    b += B[ll*nIndx + nnIndxLU[jj]+k]*w[kk * pTilde + ll]; //covariance between jj and kk and the random effect of kk
-	          }
-	        } // k
-	        aij = w[jj * pTilde + ll] - b;
-	        a[ll] += B[ll*nIndx + nnIndxLU[jj]+uiIndx[uIndxLU[ii]+j]]*aij/F[ll*Jw + jj];
-	        v[ll] += pow(B[ll * nIndx + nnIndxLU[jj]+uiIndx[uIndxLU[ii]+j]],2)/F[ll * Jw + jj];
-	      } // j
-	    }
-	    
-	    e = 0;
-	    for(j = 0; j < nnIndxLU[Jw+ii]; j++){
-	      e += B[ll * nIndx + nnIndxLU[ii]+j]*w[nnIndx[nnIndxLU[ii]+j] * pTilde + ll];
-	    }
-
-	    ff[ll] = 1.0 / F[ll * Jw + ii];
-	    gg[ll] = e / F[ll * Jw + ii];
-	  } // ll
+            v[ll] = 0; 
+            if (uIndxLU[Jw + ii] > 0){ // is ii a neighbor for anybody
+              for (j = 0; j < uIndxLU[Jw+ii]; j++){ // how many locations have ii as a neighbor
+                b = 0;
+                // now the neighbors for the jth location who has ii as a neighbor
+                jj = uIndx[uIndxLU[ii]+j]; // jj is the index of the jth location who has ii as a neighbor
+                for(k = 0; k < nnIndxLU[Jw+jj]; k++){ // these are the neighbors of the jjth location
+                  kk = nnIndx[nnIndxLU[jj]+k]; // kk is the index for the jth locations neighbors
+                  if(kk != ii){ //if the neighbor of jj is not ii
+                    b += B[ll*nIndx + nnIndxLU[jj]+k]*w[kk * pTilde + ll]; //covariance between jj and kk and the random effect of kk
+                  }
+                } // k
+                aij = w[jj * pTilde + ll] - b;
+                a[ll] += B[ll*nIndx + nnIndxLU[jj]+uiIndx[uIndxLU[ii]+j]]*aij/F[ll*Jw + jj];
+                v[ll] += pow(B[ll * nIndx + nnIndxLU[jj]+uiIndx[uIndxLU[ii]+j]],2)/F[ll * Jw + jj];
+              } // j
+            }
+            e = 0;
+            for(j = 0; j < nnIndxLU[Jw+ii]; j++){
+              e += B[ll * nIndx + nnIndxLU[ii]+j]*w[nnIndx[nnIndxLU[ii]+j] * pTilde + ll];
+            }
+            ff[ll] = 1.0 / F[ll * Jw + ii];
+            gg[ll] = e / F[ll * Jw + ii];
+          } // ll
             
 	  zeros(tmp_pTilde, pTilde);
 	  zeros(tmp_ppTilde, ppTilde);
 	  for (j = 0; j < J; j++) {
-            if (gridIndx[j] == ii) {
-              for (ll = 0; ll < pTilde; ll++) {
-                // tmp_pTilde = X_tilde' %*% omega_beta  
-                tmp_pTilde[ll] = Xw[ll * J + j] * omegaOcc[j];
+      if (gridIndx[j] == ii) {
+        for (ll = 0; ll < pTilde; ll++) {
+          // tmp_pTilde = X_tilde' %*% omega_beta  
+          tmp_pTilde[ll] = Xw[ll * J + j] * omegaOcc[j];
 	        // Compute tmp_pTilde %*% t(Xw)
 	        for (k = 0; k < pTilde; k++) { // column
-                  tmp_ppTilde[ll * pTilde + k] += tmp_pTilde[ll] * 
-	                                         Xw[k * J + j];
+            tmp_ppTilde[ll * pTilde + k] += tmp_pTilde[ll] * Xw[k * J + j];
 	        } // k
 	      }
 	    }
@@ -743,24 +728,24 @@ extern "C" {
 	  // var
 	  F77_NAME(dcopy)(&ppTilde, tmp_ppTilde, &inc, var, &inc);
 	  for (k = 0; k < pTilde; k++) {
-            var[k * pTilde + k] += ff[k] + v[k]; 
-          } // k
+      var[k * pTilde + k] += ff[k] + v[k]; 
+    } // k
 	  F77_NAME(dpotrf)(lower, &pTilde, var, &pTilde, &info FCONE);
-          if(info != 0){Rf_error("c++ error: dpotrf var failed\n");}
+    if(info != 0){Rf_error("c++ error: dpotrf var failed\n");}
 	  F77_NAME(dpotri)(lower, &pTilde, var, &pTilde, &info FCONE);
-          if(info != 0){Rf_error("c++ error: dpotri var failed\n");}
+    if(info != 0){Rf_error("c++ error: dpotri var failed\n");}
 
 	  // mu
 	  zeros(mu, pTilde);
 	  for (j = 0; j < J; j++) {
-            if (gridIndx[j] == ii) {
+      if (gridIndx[j] == ii) {
 	      for (k = 0; k < pTilde; k++) {
-                mu[k] += (zStar[j] - F77_NAME(ddot)(&pOcc, &X[j], &J, beta, &inc) - betaStarSites[j]) * omegaOcc[j] * Xw[k * J + j];
-              } // k
+          mu[k] += (zStar[j] - F77_NAME(ddot)(&pOcc, &X[j], &J, beta, &inc) - betaStarSites[j]) * omegaOcc[j] * Xw[k * J + j];
+        } // k
 	    }
 	  }
 	  for (k = 0; k < pTilde; k++) {
-            mu[k] += gg[k] + a[k];
+      mu[k] += gg[k] + a[k];
 	  }
 	  F77_NAME(dsymv)(lower, &pTilde, &one, var, &pTilde, mu, &inc, &zero, tmp_pTilde, &inc FCONE);
 

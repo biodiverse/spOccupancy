@@ -1054,9 +1054,9 @@ intPGOcc <- function(occ.formula, det.formula, data, inits, priors,
           re.level.names.fit <- re.level.names
         }
         # Site indices for fitted data
-        sites.fit <- sapply(sites, 
+        sites.fit <- lapply(sites, 
                            function(a) which(as.numeric(row.names(X.fit)) %in% a[a %in% curr.set.fit]))
-        tmp <- sapply(sites, function(a) a %in% curr.set.fit)
+        tmp <- lapply(sites, function(a) a %in% curr.set.fit)
         # This is needed to ensure that you don't pull the data from data source k.fold.data at sites where there 
 	      # is another data source.
         if (!is.null(k.fold.data)) {
@@ -1109,9 +1109,9 @@ intPGOcc <- function(occ.formula, det.formula, data, inits, priors,
         z.long.indx.fit <- z.long.indx.fit - 1
 	
         # Site indices for hold out data
-        sites.0 <- sapply(sites, 
+        sites.0 <- lapply(sites, 
                           function(a) which(as.numeric(row.names(X.0)) %in% a[a %in% curr.set.pred]))
-        tmp <- sapply(sites, function(a) a %in% curr.set.pred)
+        tmp <- lapply(sites, function(a) a %in% curr.set.pred)
         if (!is.null(k.fold.data)) {
           sites.0[-k.fold.data] <- NA
 	        for (q in 1:n.data) {
