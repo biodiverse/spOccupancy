@@ -2,6 +2,7 @@
 
 + Fixed a bug in `stMsPGOcc()` and `svcTMsPGOcc()` that prevented the models from running when there was only 1 within-season replicate. Thanks to Kevin Lafferty for bringing this to my attention. 
 + Fixed a bug in cross-validation of integrated models that led to the function crashing in certain situations, particularly on Windows machines. Thanks to Frederico Martins for bringing this to my attention.
++ Fixed a bug in the `predict()` function for `svcPGOcc()` (e.g., `predict.svcPGOcc()`) when using the `grid.index` functionality. When using `predict()`, a warning message would be displayed saying that there was a mismatch in the lengths of different vectors. This was a problem that resulted in inaccurate predictions when using `svcPGOcc()` and specifying the resolution of the SVCs as something higher than the point locations using the `grid.index` functionality. If you did this, I strongly encourage you to rerun the functions with v0.8.1, and I apologize for the inconvience this caused. Thanks very much to Ben Goldstein for pointing this out. Note that this bug did not affect results if using `svcPGOcc()` without specifying `grid.index` in the data list (which is likely the vast majority of instances for when `svcPGOcc()` is used). 
 
 # spOccupancy 0.8.0
 

@@ -43,7 +43,7 @@ As an exmaple data set, we will use data from point count surveys on breeding bi
 In the following code chunk, we read in the HBEF data set directly from the Hubbard Brook website. Note this will only work on your computer if you have an internet connection. 
 
 ```{r}
-hb.dat <- read.csv(url("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-hbr.178.3&entityid=eecb146279aa290af2292d75d3ba0f8b"))
+hb.dat <- read.csv(url("https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/178/3/eecb146279aa290af2292d75d3ba0f8b"))
 # Take a look at the data set
 str(hb.dat)
 ```
