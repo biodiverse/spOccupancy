@@ -27,8 +27,8 @@ predict.PGOcc <- function(object, X.0, ignore.RE = FALSE,
   if (missing(X.0)) {
     stop("error: X.0 must be specified\n")
   }
-  if (!any(is.data.frame(X.0), is.matrix(X.0))) {
-    stop("error: X.0 must be a data.frame or matrix\n")
+  if (!is.matrix(X.0)) {
+    stop("error: X.0 must be a matrix\n")
   }
   # Occurrence predictions ------------------------------------------------
   if (tolower(type) == 'occupancy') {  
