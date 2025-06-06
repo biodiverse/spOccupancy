@@ -4683,10 +4683,10 @@ summary.svcTMsPGOcc <- function(object,
 }
 
 predict.svcTMsPGOcc <- function(object, X.0, coords.0,
-				t.cols, n.omp.threads = 1,
-			        verbose = TRUE, n.report = 100,
-			        ignore.RE = FALSE, type = 'occupancy', 
-				grid.index.0, ...) {
+                                t.cols, n.omp.threads = 1,
+                                verbose = TRUE, n.report = 100,
+                                ignore.RE = FALSE, type = 'occupancy', 
+                                grid.index.0, ...) {
 
   # Check for unused arguments ------------------------------------------
   formal.args <- names(formals(sys.function(sys.parent())))
@@ -4940,8 +4940,8 @@ predict.svcTMsPGOcc <- function(object, X.0, coords.0,
       out <- .Call("svcTMsPGOccNNGPPredict", coords, J, n.years.max, N, q, p.occ, p.svc, n.neighbors,
                    X.big, X.w.big, coords.0, J.str, nn.indx.0, beta.samples,
                    theta.samples, lambda.samples, w.samples,
-          	   beta.star.sites.0.samples, eta.samples, 
-		   sites.link, sites.0.sampled, n.post,
+                   beta.star.sites.0.samples, eta.samples, 
+                   sites.link, sites.0.sampled, n.post,
                    cov.model.indx, n.omp.threads, verbose, n.report, J.w.0, J.w, 
                    grid.index.0.c)
 

@@ -237,9 +237,9 @@ extern "C" {
         Rprintf("Number of spatially-varying coefficients: %i \n", pTilde);
         Rprintf("Using the %s spatial correlation model.\n\n", corName.c_str());
         Rprintf("Using %i nearest neighbors.\n\n", m);
-	if (ar1) {
-          Rprintf("Using an AR(1) temporal autocorrelation matrix.\n\n");
-	}
+	      if (ar1) {
+                Rprintf("Using an AR(1) temporal autocorrelation matrix.\n\n");
+	      }
 #ifdef _OPENMP
        Rprintf("Source compiled with OpenMP support and model fit using %i thread(s).\n\n", nThreads);
 #else
