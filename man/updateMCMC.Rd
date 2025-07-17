@@ -14,7 +14,7 @@ updateMCMC(object, n.batch, n.samples, n.burn = 0, n.thin,
   is run for a long time but convergence/adequate mixing of the MCMC chains is not 
   reached. Instead of re-running the entire model again, this function allows you 
   to pick up where you left off. This function is currently in development, and only currently works 
-  with the following spOccupancy and spAbundance model objects: msAbund, sfJSDM, lfJSDM. Note that
+  with the following spOccupancy and spAbundance model objects: msAbund, sfJSDM, lfJSDM, svcTIntAbund. Note that
   cross-validation is not possible when updating the model.
 }
 

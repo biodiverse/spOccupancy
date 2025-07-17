@@ -35,6 +35,7 @@ svcTIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
     stop("error: data must be a list")
   }
   names(data) <- tolower(names(data))
+  data.orig <- data
   if (missing(occ.formula)) {
     stop("error: occ.formula must be specified")
   }
@@ -1321,6 +1322,8 @@ svcTIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
     
     out.tmp <- list()                          
     out <- list()                              
+    # Random seed information for each chain of the model.
+    seeds.list <- list()
     for (i in 1:n.chains) {                  
       # Change initial values if i > 1       
       if ((i > 1)) {
@@ -1366,6 +1369,7 @@ svcTIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
                             ar1.vals, tuning.c, accept.rate, chain.info, 
                             waic.n.obs.indx, waic.cell.indx)
       chain.info[1] <- chain.info[1] + 1
+      seeds.list[[i]] <- .Random.seed
     }
 
     # Calculate R-Hat ---------------
@@ -1530,6 +1534,16 @@ svcTIntPGOcc <- function(occ.formula, det.formula, data, inits, priors,
       out$psiRE <- FALSE
     }
     out$pRELong <- ifelse(p.det.re.by.data > 0, TRUE, FALSE)
+    # Send out objects needed for updateMCMC
+    update.list <- list()
+    update.list$n.samples <- n.samples
+    update.list$n.omp.threads <- n.omp.threads
+    update.list$data <- data.orig
+    update.list$priors <- priors
+    update.list$formula <- formula
+    # Random seed to have for updating. 
+    update.list$final.seed <- seeds.list
+    out$update <- update.list
   } # NNGP
   class(out) <- "svcTIntPGOcc"
   out$run.time <- proc.time() - ptm
