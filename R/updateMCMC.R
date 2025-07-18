@@ -285,10 +285,14 @@ updateMCMC <- function(object, n.batch, n.samples, n.burn = 0, n.thin,
       if (object$muRE) {
         beta.star.start <- max(w.tuning.indx) + 1
         beta.star.tuning.indx <- beta.star.start:(beta.star.start + ncol(object$beta.star.samples) - 1)
+      } else {
+        beta.star.tuning.indx <- w.tuning.indx
       }
       if (object$pRE) {
         alpha.star.start <- max(beta.star.tuning.indx) + 1
         alpha.star.tuning.indx <- alpha.star.start:(alpha.star.start + ncol(object$alpha.star.samples) - 1)
+      } else {
+        alpha.star.tuning.indx <- beta.star.tuning.indx
       }
       if (any(object$dist == 'NB')) {
         kappa.start <- max(alpha.star.tuning.indx) + 1
