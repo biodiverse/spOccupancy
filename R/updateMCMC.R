@@ -228,6 +228,7 @@ updateMCMC <- function(object, n.batch, n.samples, n.burn = 0, n.thin,
       # Set the random seed based on the previous set of the model
       assign(".Random.seed", object$update$final.seed[[i]], .GlobalEnv)
       p.abund <- ncol(object$beta.samples)
+      p.det <- ncol(object$alpha.samples)
       p.svc <- length(object$svc.cols)
       n.data <- length(object$y)
       J <- nrow(object$coords)
